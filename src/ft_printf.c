@@ -59,6 +59,7 @@ int		ft_printf(const char *form, ...)
 	t_options	f;
 	t_buff		buf;
 
+	f.color = 0;
 	va_start(ap, form);
 	ft_init_buff(&buf, 1);
 	while (*form)

@@ -1,60 +1,50 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: asmall <marvin@42.fr>                      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/01/27 13:53:20 by asmall            #+#    #+#              #
-#    Updated: 2020/01/31 19:51:24 by asmall           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** # 
-
-NAME = libftprintf.a
+NAME = ft_printf.a
 
 FLAGS = -Wall -Wextra -Werror
 
-SRCDIR = src/
-SRC = 	ft_bigint_operations.c \
-		ft_bigint.c \
-		ft_buff_manage.c \
-		ft_handle.c \
-		ft_parse_nums.c \
-		ft_print_cs.c \
-		ft_print_diuoxb.c \
-		ft_print_e.c \
-		ft_print_f.c \
-		ft_print_options.c \
-		ft_print_prk.c \
-		ft_printf.c \
-		ft_set_options.c \
-		ft_utils_num.c \
-		ft_utils_str.c \
-		ft_color.c \
+LIBFT = inc/libft
 
-OBJDIR = obj/
-OBJ = $(addprefix $(OBJDIR), $(SRC:%.c=%.o))
+DIR_S = src/
 
-INCLUDES = includes/
-HEADER = $(addprefix $(INCLUDES), ft_printf.h)
+DIR_O = obj/
+
+INCLUDES = inc/ft_printf.h
+
+SOURCES =	ft_bigint.c \
+			ft_bigint_operations.c \
+			ft_buff_manage.c \
+			ft_color.c\
+			ft_handle.c \
+			ft_parse_nums.c \
+			ft_print_cs.c \
+			ft_print_diuoxb.c \
+			ft_print_e.c \
+			ft_print_f.c \
+			ft_printf.c \
+			ft_print_options.c \
+			ft_print_prk.c \
+			ft_set_options.c \
+			ft_utils_num.c \
+			ft_utils_str.c \
+
+SRCS = $(addprefix $(DIR_S),$(SOURCES))
+
+OBJS = $(addprefix $(DIR_O),$(SOURCES:.c=.o))
 
 all: $(NAME)
 
-$(NAME): $(OBJDIR) $(OBJ)
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
+$(NAME): $(OBJS)
+	@ar rc $(NAME) $(OBJS)
+	@ranlib $(NAME)
 
-$(OBJDIR)%.o: $(SRCDIR)%.c $(HEADER)
-	gcc $(FLAGS) -c $< -o $@ -I $(INCLUDES)
-
-$(OBJDIR):
-	mkdir obj/
+$(DIR_O)%.o: $(DIR_S)%.c
+	@mkdir -p $(DIR_O)
+	@$(CC) $(FLAGS) -I $(DIR_S) -o $@ -c $<
 
 clean:
-	rm -rf $(OBJ) main.o
-	rm -rf $(OBJDIR)
+	@rm -rf $(DIR_O)
 
 fclean: clean
-	rm -rf $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all

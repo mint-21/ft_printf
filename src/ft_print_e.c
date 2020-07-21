@@ -71,7 +71,7 @@ char	*ft_get_enum(t_fnum *fnum, int sum, int ilen, char spec)
 	while (i < sum + 1)
 		number[i++] = '0';
 	ft_round(number, --i);
-	i = sum == 2 ? --i : i;
+	(sum == 2) ? (--i) : (i);
 	ft_set_exp(&number[i], fnum, spec);
 	return (number);
 }
